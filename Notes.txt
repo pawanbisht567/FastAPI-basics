@@ -1,0 +1,70 @@
+When you execute:
+pip install fastapi[standard]
+
+
+Python installs the packages into your active virtual environment (venv).
+
+It does not automatically create:
+- requirements.txt
+- pyproject.toml
+These files serve different purposes.
+File	Purpose	Automatically created?
+requirements.txt	Lists packages and versions	No
+pyproject.toml	Project metadata and dependency declarations	No, not with ordinary pip installation
+venv/	Stores your isolated Python environment	Created by python -m venv
+
+2. How do you create them?
+Option A: requirements.txt (simplest for your current project)
+
+After installing FastAPI:
+pip freeze > requirements.txt
+
+
+This creates the file containing installed packages and their versions.
+
+Example:
+fastapi==...
+uvicorn==...
+pydantic==...
+
+
+Commit this file to GitHub.
+
+Option B: pyproject.toml (modern project configuration)
+
+Create a file named pyproject.toml manually:
+[project]
+name = "fastapi-basics"
+version = "0.1.0"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi[standard]",
+]
+
+
+Then you can install the project dependencies with:
+pip install -e .
+
+
+This tells pip to install the project and its declared dependencies.
+3. What should your GitHub project contain?
+For now, I'd recommend this:
+FastAPI-basics/
+│
+├── venv/                  # Ignored by Git
+├── __pycache__/           # Ignored by Git
+│
+├── .gitignore
+├── main.py
+├── requirements.txt
+├── README.md
+└── pyproject.toml         # Optional for now
+
+
+You don't need both requirements.txt and pyproject.toml yet. For your current learning project, stick with requirements.txt.
+
+Remember this Node.js comparison:
+
+In Node.js, npm install express automatically updates package.json when you install a dependency without --no-save.
+
+In Python, pip install fastapi installs the dependency but doesn't automatically update a project dependency file.
